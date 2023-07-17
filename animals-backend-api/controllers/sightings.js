@@ -1,9 +1,7 @@
 import { Router } from "express";
-
 import { validate } from "../middleware/validator.js";
-
-import models from "../models/model-switcher.js"
-import { Sighting } from "../models/sighting.js";
+import { Sighting } from "../models/sighting.js"
+import * as sighting from "../models/sighting.js"
 import auth from "../middleware/auth.js";
 
 const sightingController = Router()
@@ -17,7 +15,7 @@ const getSightingListSchema = {
 sightingController.get("/sightings", validate({ body: getSightingListSchema }), async (req, res) => {
     // #swagger.summary = 'Get a collection of all sightings'
 
-    const sightings = await models.sightingModel.getAll()
+    const sightings = await sighting.getAll()
 
     res.status(200).json({
         status: 200,
@@ -46,7 +44,7 @@ sightingController.get("/sightings/paged/:page",
         const pageSize = 5;
         const page = parseInt(req.params.page);
 
-        const sightings = await models.sightingModel.getByPage(page, pageSize);
+        const sightings = await sighting.getByPage(page, pageSize);
 
         res.status(200).json({
             status: 200,
@@ -75,7 +73,7 @@ sightingController.get(
         // #swagger.summary = 'Get a collection of top sightings'
         const amount = parseInt(req.params.amount)
 
-        const sightings = await models.sightingModel.getTop(amount)
+        const sightings = await sighting.getTop(amount)
 
         res.status(200).json({
             status: 200,
@@ -102,7 +100,7 @@ sightingController.get(
         // #swagger.summary = 'Get all sightings by a user ID'
         const userID = req.params.id
 
-        const sightings = await models.sightingModel.getByUserID(userID)
+        const sightings = await sighting.getByUserID(userID)
 
         res.status(200).json({
             status: 200,
@@ -126,7 +124,7 @@ sightingController.get("/sightings/:id", validate({ params: getSightingByIDSchem
     // #swagger.summary = 'Get a specific sighting by ID'
     const sightingID = req.params.id
 
-    models.sightingModel.getByID(sightingID).then(sighting => {
+    sighting.getByID(sightingID).then(sighting => {
         res.status(200).json({
             status: 200,
             message: "Get sighting by ID",
@@ -183,7 +181,7 @@ sightingController.post("/sightings/", [
     )
 
     // Use the create model function to insert this sighting into the DB
-    models.sightingModel.create(sighting).then(sighting => {
+    sighting.create(sighting).then(sighting => {
         res.status(200).json({
             status: 200,
             message: "Created sighting",

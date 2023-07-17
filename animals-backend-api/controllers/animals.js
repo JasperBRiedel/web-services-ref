@@ -1,9 +1,8 @@
 import { Router } from "express";
-
 import { validate } from "../middleware/validator.js";
 import auth from "../middleware/auth.js";
-
-import models from "../models/model-switcher.js"
+import { Animal } from "../models/animal.js"
+import * as animal from "../models/animal.js"
 
 const animalController = Router()
 
@@ -16,7 +15,7 @@ const getAnimalListSchema = {
 animalController.get("/animals", validate({ body: getAnimalListSchema }), async (req, res) => {
     // #swagger.summary = 'Get a collection of all animals'
 
-    const animals = await models.animalModel.getAll()
+    const animals = await animal.getAll()
 
     res.status(200).json({
         status: 200,
@@ -40,7 +39,7 @@ animalController.get("/animals/:id", validate({ params: getAnimalByIDSchema }), 
     // #swagger.summary = 'Get a specific animal by ID'
     const animalID = req.params.id
 
-    models.animalModel.getByID(animalID).then(animal => {
+    animal.getByID(animalID).then(animal => {
         res.status(200).json({
             status: 200,
             message: "Get animal by ID",
@@ -98,7 +97,7 @@ animalController.post("/animals/", [
     const animal = Animal(null, animalData.name, animalData.species)
 
     // Use the create model function to insert this animal into the DB
-    models.animalModel.create(animal).then(animal => {
+    animal.create(animal).then(animal => {
         res.status(200).json({
             status: 200,
             message: "Created animal",

@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { validate } from "../middleware/validator.js";
-import models from "../models/model-switcher.js"
 import xml2js from "xml2js"
 import { Trail } from "../models/trail.js";
+import * as trail from "../models/trail.js";
 import auth from "../middleware/auth.js";
 
 const trailController = Router()
@@ -16,7 +16,7 @@ const getTrailListSchema = {
 trailController.get("/trails", validate({ body: getTrailListSchema }), async (req, res) => {
     // #swagger.summary = 'Get a collection of all trails'
 
-    const trails = await models.trailModel.getAll()
+    const trails = await trail.getAll()
 
     res.status(200).json({
         status: 200,
@@ -40,7 +40,7 @@ trailController.get("/trails/:id", validate({ params: getTrailByIDSchema }), (re
     // #swagger.summary = 'Get a specific trail by ID'
     const trailID = req.params.id
 
-    models.trailModel.getByID(trailID).then(trail => {
+    trail.getByID(trailID).then(trail => {
         res.status(200).json({
             status: 200,
             message: "Get trail by ID",
@@ -76,7 +76,7 @@ trailController.post("/trails/upload/xml", auth(["admin", "spotter"]), (req, res
                         // Convert the xml object into a model object
                         const trailModel = Trail(null, trailData.name.toString())
                         // Return the promise of each creation query
-                        return models.trailModel.create(trailModel)
+                        return trail.create(trailModel)
                     })).then(results => {
                         res.status(200).json({
                             status: 200,
@@ -96,7 +96,7 @@ trailController.post("/trails/upload/xml", auth(["admin", "spotter"]), (req, res
                             trailData.name.toString()
                         )
                         // Return the promise of each creation query
-                        return models.trailModel.update(trailModel)
+                        return trail.update(trailModel)
                     })).then(results => {
                         res.status(200).json({
                             status: 200,
@@ -170,7 +170,7 @@ trailController.post("/trails/", [
     const trail = Trail(null, trailData.name)
 
     // Use the create model function to insert this trail into the DB
-    models.trailModel.create(trail).then(trail => {
+    trail.create(trail).then(trail => {
         res.status(200).json({
             status: 200,
             message: "Created trail",

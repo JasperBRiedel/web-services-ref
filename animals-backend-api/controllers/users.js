@@ -2,8 +2,8 @@ import { Router } from "express";
 import bcrypt from "bcryptjs"
 import { v4 as uuid4 } from "uuid"
 import { validate } from "../middleware/validator.js";
+import * as user from "../models/user.js";
 import { User } from "../models/user.js";
-import models from "../models/model-switcher.js"
 import auth from "../middleware/auth.js";
 
 const userController = Router()
@@ -29,12 +29,12 @@ userController.post("/users/login",
         // access request body
         let loginData = req.body
 
-        models.userModel.getByEmail(loginData.email)
+        user.getByEmail(loginData.email)
             .then(user => {
                 if (bcrypt.compareSync(loginData.password, user.password)) {
                     user.authenticationKey = uuid4().toString()
 
-                    models.userModel.update(user).then(result => {
+                    user.update(user).then(result => {
                         res.status(200).json({
                             status: 200,
                             message: "user logged in",
@@ -72,10 +72,10 @@ userController.post("/users/logout",
     validate({ body: postUserLogoutSchema }),
     (req, res) => {
         const authenticationKey = req.body.authenticationKey
-        models.userModel.getByAuthenticationKey(authenticationKey)
+        user.getByAuthenticationKey(authenticationKey)
             .then(user => {
                 user.authenticationKey = null
-                models.userModel.update(user).then(user => {
+                user.update(user).then(user => {
                     res.status(200).json({
                         status: 200,
                         message: "user logged out"
@@ -102,7 +102,7 @@ userController.get("/users", [
     validate({ body: getUserListSchema }),
 ], async (req, res) => {
 
-    const users = await models.userModel.getAll()
+    const users = await user.getAll()
 
     res.status(200).json({
         status: 200,
@@ -132,7 +132,7 @@ userController.get("/users/:id", [
     // TODO: Enforce that moderator and spotter users
     // can only get them selves. 
 
-    models.userModel.getByID(userID).then(user => {
+    user.getByID(userID).then(user => {
         res.status(200).json({
             status: 200,
             message: "Get user by ID",
@@ -163,7 +163,7 @@ userController.get("/users/by-key/:authenticationKey",
     (req, res) => {
         const authenticationKey = req.params.authenticationKey
 
-        models.userModel.getByAuthenticationKey(authenticationKey).then(user => {
+        user.getByAuthenticationKey(authenticationKey).then(user => {
             res.status(200).json({
                 status: 200,
                 message: "Get user by authentication key",
@@ -237,7 +237,7 @@ userController.post("/users", [
     )
 
     // Use the create model function to insert this user into the DB
-    models.userModel.create(user).then(user => {
+    user.create(user).then(user => {
         res.status(200).json({
             status: 200,
             message: "Created user",
@@ -298,7 +298,7 @@ userController.post(
         )
 
         // Use the create model function to insert this user into the DB
-        models.userModel.create(user).then(user => {
+        user.create(user).then(user => {
             res.status(200).json({
                 status: 200,
                 message: "Registration successful",
@@ -377,7 +377,7 @@ userController.patch("/users", [
     )
 
     // Use the update model function to update this user in the DB
-    models.userModel.update(user).then(user => {
+    user.update(user).then(user => {
         res.status(200).json({
             status: 200,
             message: "Updated user",
@@ -408,7 +408,7 @@ userController.delete("/users/:id", [
 ], (req, res) => {
     const userID = req.params.id
 
-    models.userModel.deleteByID(userID).then(result => {
+    user.deleteByID(userID).then(result => {
         res.status(200).json({
             status: 200,
             message: "User deleted",
