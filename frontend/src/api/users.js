@@ -26,11 +26,10 @@ export async function logout(authenticationKey) {
         {
             method: "POST",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+                'X-AUTH-KEY': authenticationKey
             },
-            body: JSON.stringify({
-                authenticationKey
-            })
+            body: JSON.stringify({})
         }
     )
 
@@ -42,11 +41,12 @@ export async function logout(authenticationKey) {
 export async function getAllUsers(authenticationKey) {
     // GET from the API /users
     const response = await fetch(
-        API_URL + "/users?authKey=" + authenticationKey,
+        API_URL + "/users",
         {
             method: "GET",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+                'X-AUTH-KEY': authenticationKey
             },
         }
     )
@@ -58,11 +58,12 @@ export async function getAllUsers(authenticationKey) {
 
 export async function getUserByID(userID, authenticationKey) {
     const response = await fetch(
-        API_URL + "/users/" + userID + "?authKey=" + authenticationKey,
+        API_URL + "/users/" + userID,
         {
             method: "GET",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+                'X-AUTH-KEY': authenticationKey
             },
         }
     )
@@ -94,9 +95,10 @@ export async function update(user, authenticationKey) {
         {
             method: "PATCH",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+                'X-AUTH-KEY': authenticationKey
             },
-            body: JSON.stringify({ user, authenticationKey })
+            body: JSON.stringify({ user })
         }
     )
 
@@ -111,9 +113,10 @@ export async function create(user, authenticationKey) {
         {
             method: "POST",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+                'X-AUTH-KEY': authenticationKey
             },
-            body: JSON.stringify({ user, authenticationKey })
+            body: JSON.stringify({ user })
         }
     )
 
@@ -128,9 +131,10 @@ export async function deleteByID(userID, authenticationKey) {
         {
             method: "DELETE",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+                'X-AUTH-KEY': authenticationKey
             },
-            body: JSON.stringify({ authenticationKey })
+            body: JSON.stringify({})
         }
     )
 

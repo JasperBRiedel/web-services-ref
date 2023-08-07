@@ -74,9 +74,10 @@ export async function create(sighting, authenticationKey) {
         {
             method: "POST",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+                'X-AUTH-KEY': authenticationKey
             },
-            body: JSON.stringify({ ...sighting, authenticationKey })
+            body: JSON.stringify(sighting)
         }
     )
 
@@ -109,9 +110,10 @@ export async function remove(sighting, authenticationKey) {
         {
             method: "DELETE",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+                'X-AUTH-KEY': authenticationKey
             },
-            body: JSON.stringify({ ...sighting, authenticationKey })
+            body: JSON.stringify(sighting)
         }
     )
 

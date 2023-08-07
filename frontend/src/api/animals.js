@@ -40,9 +40,10 @@ export async function create(animal, authenticationKey) {
         {
             method: "POST",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+                'X-AUTH-KEY': authenticationKey
             },
-            body: JSON.stringify({ ...animal, authenticationKey })
+            body: JSON.stringify(animal)
         }
     )
 
@@ -57,9 +58,10 @@ export async function update(animal, authenticationKey) {
         {
             method: "PATCH",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+                'X-AUTH-KEY': authenticationKey
             },
-            body: JSON.stringify({ ...animal, authenticationKey })
+            body: JSON.stringify(animal)
         }
     )
 
@@ -74,9 +76,10 @@ export async function remove(animal, authenticationKey) {
         {
             method: "DELETE",
             headers: {
-                'Content-Type': "application/json"
+                'Content-Type': "application/json",
+                'X-AUTH-KEY': authenticationKey
             },
-            body: JSON.stringify({ ...animal, authenticationKey })
+            body: JSON.stringify(animal)
         }
     )
 
