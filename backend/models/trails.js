@@ -1,6 +1,6 @@
 import { db } from "../database/mysql.js";
 
-export function Trail(id, name) {
+export function newTrail(id, name) {
     return {
         id,
         name,
@@ -12,7 +12,7 @@ export async function getAll() {
     const [allTrailsResults] = await db.query("SELECT * FROM trails")
     // Convert the collection of results into a list of Trail objects
     return await allTrailsResults.map((trailResult) =>
-        Trail(trailResult.id, trailResult.name))
+        newTrail(trailResult.id, trailResult.name))
 }
 
 export async function getByID(trailID) {
@@ -24,7 +24,7 @@ export async function getByID(trailID) {
     if (trailsResults.length > 0) {
         const trailResult = trailsResults[0];
         return Promise.resolve(
-            Trail(trailResult.id, trailResult.name)
+            newTrail(trailResult.id, trailResult.name)
         )
     } else {
         return Promise.reject("no results found")

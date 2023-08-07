@@ -1,14 +1,13 @@
 import { Router } from "express";
 import auth from "../middleware/auth.js";
-import { Animal } from "../models/animal.js"
-import * as animal from "../models/animal.js"
+import * as Animals from "../models/animals.js"
 
 // TODO: Implement input validation
 
 const animalController = Router()
 
 animalController.get("/animals", async (req, res) => {
-    const animals = await animal.getAll()
+    const animals = await Animals.getAll()
 
     res.status(200).json({
         status: 200,
@@ -20,7 +19,7 @@ animalController.get("/animals", async (req, res) => {
 animalController.get("/animals/:id", (req, res) => {
     const animalID = req.params.id
 
-    animal.getByID(animalID).then(animal => {
+    Animals.getByID(animalID).then(animal => {
         res.status(200).json({
             status: 200,
             message: "Get animal by ID",
@@ -39,7 +38,7 @@ animalController.post("/animals/", auth(["admin", "moderator"]), (req, res) => {
     const animalData = req.body
 
     // Convert the animal data into an Animal model object
-    const animal = Animal(null, animalData.name, animalData.species)
+    const animal = Animals.newAnimal(null, animalData.name, animalData.species)
 
     // Use the create model function to insert this animal into the DB
     animal.create(animal).then(animal => {

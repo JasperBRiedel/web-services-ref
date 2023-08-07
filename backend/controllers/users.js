@@ -1,8 +1,7 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs"
 import { v4 as uuid4 } from "uuid"
-import * as user from "../models/user.js";
-import { User } from "../models/user.js";
+import * as Users from "../models/users.js";
 import auth from "../middleware/auth.js";
 
 // TODO: Implement input validation
@@ -13,12 +12,12 @@ userController.post("/users/login", (req, res) => {
     // access request body
     let loginData = req.body
 
-    user.getByEmail(loginData.email)
+    Users.getByEmail(loginData.email)
         .then(user => {
             if (bcrypt.compareSync(loginData.password, user.password)) {
                 user.authenticationKey = uuid4().toString()
 
-                user.update(user).then(result => {
+                Users.update(user).then(result => {
                     res.status(200).json({
                         status: 200,
                         message: "user logged in",
@@ -33,6 +32,7 @@ userController.post("/users/login", (req, res) => {
 
             }
         }).catch(error => {
+            console.log(error)
             res.status(500).json({
                 status: 500,
                 message: "login failed"
@@ -42,10 +42,10 @@ userController.post("/users/login", (req, res) => {
 
 userController.post("/users/logout", (req, res) => {
     const authenticationKey = req.body.authenticationKey
-    user.getByAuthenticationKey(authenticationKey)
+    Users.getByAuthenticationKey(authenticationKey)
         .then(user => {
             user.authenticationKey = null
-            user.update(user).then(user => {
+            Users.update(user).then(user => {
                 res.status(200).json({
                     status: 200,
                     message: "user logged out"
@@ -61,7 +61,7 @@ userController.post("/users/logout", (req, res) => {
 
 
 userController.get("/users", auth(["admin"]), async (req, res) => {
-    const users = await user.getAll()
+    const users = await Users.getAll()
 
     res.status(200).json({
         status: 200,
@@ -76,7 +76,7 @@ userController.get("/users/:id", auth(["admin", "moderator", "spotter"]), (req, 
     // TODO: Enforce that moderator and spotter users
     // can only get them selves. 
 
-    user.getByID(userID).then(user => {
+    Users.getByID(userID).then(user => {
         res.status(200).json({
             status: 200,
             message: "Get user by ID",
@@ -93,7 +93,7 @@ userController.get("/users/:id", auth(["admin", "moderator", "spotter"]), (req, 
 userController.get("/users/by-key/:authenticationKey", (req, res) => {
     const authenticationKey = req.params.authenticationKey
 
-    user.getByAuthenticationKey(authenticationKey).then(user => {
+    Users.getByAuthenticationKey(authenticationKey).then(user => {
         res.status(200).json({
             status: 200,
             message: "Get user by authentication key",
@@ -117,7 +117,7 @@ userController.post("/users", auth(["admin"]), (req, res) => {
     }
 
     // Convert the user data into an User model object
-    const user = User(
+    const user = Users.newUser(
         null,
         userData.email,
         userData.password,
@@ -128,7 +128,7 @@ userController.post("/users", auth(["admin"]), (req, res) => {
     )
 
     // Use the create model function to insert this user into the DB
-    user.create(user).then(user => {
+    Users.create(user).then(user => {
         res.status(200).json({
             status: 200,
             message: "Created user",
@@ -150,7 +150,7 @@ userController.post("/users/register", (req, res) => {
     userData.password = bcrypt.hashSync(userData.password);
 
     // Convert the user data into an User model object
-    const user = User(
+    const user = Users.newUser(
         null,
         userData.email,
         userData.password,
@@ -161,7 +161,7 @@ userController.post("/users/register", (req, res) => {
     )
 
     // Use the create model function to insert this user into the DB
-    user.create(user).then(user => {
+    Users.create(user).then(user => {
         res.status(200).json({
             status: 200,
             message: "Registration successful",
@@ -193,7 +193,7 @@ userController.patch("/users", auth(["admin", "moderator", "spotter"]), async (r
     }
 
     // Convert the user data into a User model object
-    const user = User(
+    const user = Users.newUser(
         userData.id,
         userData.email,
         userData.password,
@@ -204,7 +204,7 @@ userController.patch("/users", auth(["admin", "moderator", "spotter"]), async (r
     )
 
     // Use the update model function to update this user in the DB
-    user.update(user).then(user => {
+    Users.update(user).then(user => {
         res.status(200).json({
             status: 200,
             message: "Updated user",
@@ -222,7 +222,7 @@ userController.patch("/users", auth(["admin", "moderator", "spotter"]), async (r
 userController.delete("/users/:id", auth(["admin"]), (req, res) => {
     const userID = req.params.id
 
-    user.deleteByID(userID).then(result => {
+    Users.deleteByID(userID).then(result => {
         res.status(200).json({
             status: 200,
             message: "User deleted",

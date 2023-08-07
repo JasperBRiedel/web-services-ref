@@ -1,6 +1,5 @@
 import express from "express"
 import cors from "cors"
-import { validateErrorMiddleware } from "./middleware/validator.js"
 import fileUpload from "express-fileupload"
 
 // Create express application
@@ -28,10 +27,6 @@ app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 },
 }))
 
-// Import and enable swagger documentation pages
-import docsRouter from "./middleware/swagger-doc.js"
-app.use(docsRouter)
-
 // Import and use the routers of each controller.
 import animalController from "./controllers/animals.js"
 app.use(animalController)
@@ -41,12 +36,6 @@ import trailController from "./controllers/trails.js"
 app.use(trailController)
 import sightingController from "./controllers/sightings.js"
 app.use(sightingController)
-
-// Enable JSON validation error middleware
-//
-// If JSON validation fails, this middleware will send back a 400 response
-// containing the errors.
-app.use(validateErrorMiddleware)
 
 // Start listening for API requests
 app.listen(

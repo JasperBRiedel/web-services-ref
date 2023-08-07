@@ -1,4 +1,4 @@
-import * as user from "../models/user.js"
+import * as user from "../models/users.js"
 
 export default function auth(allowed_roles) {
     return function (req, res, next) {

@@ -1,6 +1,5 @@
 import { Router } from "express";
-import { Sighting } from "../models/sighting.js"
-import * as sighting from "../models/sighting.js"
+import * as Sightings from "../models/sightings.js"
 import auth from "../middleware/auth.js";
 
 // TODO: Implement input validation
@@ -8,7 +7,7 @@ import auth from "../middleware/auth.js";
 const sightingController = Router()
 
 sightingController.get("/sightings", async (req, res) => {
-    const sightings = await sighting.getAll()
+    const sightings = await Sightings.getAll()
 
     res.status(200).json({
         status: 200,
@@ -21,7 +20,7 @@ sightingController.get("/sightings/paged/:page", async (req, res) => {
     const pageSize = 5;
     const page = parseInt(req.params.page);
 
-    const sightings = await sighting.getByPage(page, pageSize);
+    const sightings = await Sightings.getByPage(page, pageSize);
 
     res.status(200).json({
         status: 200,
@@ -33,7 +32,7 @@ sightingController.get("/sightings/paged/:page", async (req, res) => {
 sightingController.get("/sightings/top/:amount", async (req, res) => {
     const amount = parseInt(req.params.amount)
 
-    const sightings = await sighting.getTop(amount)
+    const sightings = await Sightings.getTop(amount)
 
     res.status(200).json({
         status: 200,
@@ -45,7 +44,7 @@ sightingController.get("/sightings/top/:amount", async (req, res) => {
 sightingController.get("/sightings/user-id/:id", async (req, res) => {
     const userID = req.params.id
 
-    const sightings = await sighting.getByUserID(userID)
+    const sightings = await Sightings.getByUserID(userID)
 
     res.status(200).json({
         status: 200,
@@ -57,7 +56,7 @@ sightingController.get("/sightings/user-id/:id", async (req, res) => {
 sightingController.get("/sightings/:id", (req, res) => {
     const sightingID = req.params.id
 
-    sighting.getByID(sightingID).then(sighting => {
+    Sightings.getByID(sightingID).then(sighting => {
         res.status(200).json({
             status: 200,
             message: "Get sighting by ID",
@@ -76,7 +75,7 @@ sightingController.post("/sightings/", auth(["admin", "moderator", "spotter"]), 
     const sightingData = req.body
 
     // Convert the sighting data into an Sighting model object
-    const sighting = Sighting(
+    const sighting = Sightings.newSighting(
         null,
         sightingData.trail_id,
         sightingData.animal_id,
@@ -86,7 +85,7 @@ sightingController.post("/sightings/", auth(["admin", "moderator", "spotter"]), 
     )
 
     // Use the create model function to insert this sighting into the DB
-    sighting.create(sighting).then(sighting => {
+    Sightings.create(sighting).then(sighting => {
         res.status(200).json({
             status: 200,
             message: "Created sighting",

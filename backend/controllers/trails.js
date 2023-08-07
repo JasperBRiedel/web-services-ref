@@ -1,7 +1,6 @@
 import { Router } from "express";
 import xml2js from "xml2js"
-import { Trail } from "../models/trail.js";
-import * as trail from "../models/trail.js";
+import * as Trails from "../models/trails.js";
 import auth from "../middleware/auth.js";
 
 // TODO: Implement input validation
@@ -10,7 +9,7 @@ const trailController = Router()
 
 trailController.get("/trails", async (req, res) => {
 
-    const trails = await trail.getAll()
+    const trails = await Trails.getAll()
 
     res.status(200).json({
         status: 200,
@@ -22,7 +21,7 @@ trailController.get("/trails", async (req, res) => {
 trailController.get("/trails/:id", (req, res) => {
     const trailID = req.params.id
 
-    trail.getByID(trailID).then(trail => {
+    Trails.getByID(trailID).then(trail => {
         res.status(200).json({
             status: 200,
             message: "Get trail by ID",
@@ -55,9 +54,9 @@ trailController.post("/trails/upload/xml", auth(["admin", "spotter"]), (req, res
                 if (operation == "insert") {
                     Promise.all(trailsData.map((trailData) => {
                         // Convert the xml object into a model object
-                        const trailModel = Trail(null, trailData.name.toString())
+                        const trailModel = Trails.newTrail(null, trailData.name.toString())
                         // Return the promise of each creation query
-                        return trail.create(trailModel)
+                        return Trails.create(trailModel)
                     })).then(results => {
                         res.status(200).json({
                             status: 200,
@@ -72,12 +71,12 @@ trailController.post("/trails/upload/xml", auth(["admin", "spotter"]), (req, res
                 } else if (operation == "update") {
                     Promise.all(trailsData.map((trailData) => {
                         // Convert the xml object into a model object
-                        const trailModel = Trail(
+                        const trailModel = newTrail(
                             trailData.id.toString(),
                             trailData.name.toString()
                         )
                         // Return the promise of each creation query
-                        return trail.update(trailModel)
+                        return Trails.update(trailModel)
                     })).then(results => {
                         res.status(200).json({
                             status: 200,
@@ -119,10 +118,10 @@ trailController.post("/trails/", auth(["admin", "moderator"]), (req, res) => {
     const trailData = req.body
 
     // Convert the trail data into an Trail model object
-    const trail = Trail(null, trailData.name)
+    const trail = newTrail(null, trailData.name)
 
     // Use the create model function to insert this trail into the DB
-    trail.create(trail).then(trail => {
+    Trails.create(trail).then(trail => {
         res.status(200).json({
             status: 200,
             message: "Created trail",

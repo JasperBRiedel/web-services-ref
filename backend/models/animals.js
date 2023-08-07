@@ -1,7 +1,7 @@
 import { db } from "../database/mysql.js"
 
 // Animal model (object) constructor
-export function Animal(id, name, species) {
+export function newAnimal(id, name, species) {
     return {
         id,
         name,
@@ -14,7 +14,7 @@ export async function getAll() {
     const [allAnimalsResults] = await db.query("SELECT * FROM animals")
     // Convert the collection of results into a list of Animal objects
     return await allAnimalsResults.map((animalResult) =>
-        Animal(animalResult.id, animalResult.name, animalResult.species))
+        newAnimal(animalResult.id, animalResult.name, animalResult.species))
 }
 
 export async function getByID(animalID) {
@@ -26,7 +26,7 @@ export async function getByID(animalID) {
     if (animalsResults.length > 0) {
         const animalResult = animalsResults[0];
         return Promise.resolve(
-            Animal(animalResult.id, animalResult.name, animalResult.species)
+            newAnimal(animalResult.id, animalResult.name, animalResult.species)
         )
     } else {
         return Promise.reject("no results found")

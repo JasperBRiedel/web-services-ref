@@ -1,6 +1,6 @@
 import { db } from "../database/mysql.js";
 
-export function User(id, email, password, role, firstName, lastName, authenticationKey) {
+export function newUser(id, email, password, role, firstName, lastName, authenticationKey) {
     return {
         id,
         email,
@@ -16,7 +16,7 @@ export async function getAll() {
     const [allUserResults] = await db.query("SELECT * FROM users")
 
     return await allUserResults.map((userResult) =>
-        User(
+        newUser(
             userResult.id.toString(),
             userResult.email,
             userResult.password,
@@ -35,7 +35,7 @@ export async function getByID(userID) {
     if (userResults.length > 0) {
         const userResult = userResults[0]
         return Promise.resolve(
-            User(
+            newUser(
                 userResult.id.toString(),
                 userResult.email,
                 userResult.password,
@@ -58,7 +58,7 @@ export async function getByEmail(email) {
     if (userResults.length > 0) {
         const userResult = userResults[0]
         return Promise.resolve(
-            User(
+            newUser(
                 userResult.id.toString(),
                 userResult.email,
                 userResult.password,
@@ -81,7 +81,7 @@ export async function getByAuthenticationKey(authenticationKey) {
     if (userResults.length > 0) {
         const userResult = userResults[0]
         return Promise.resolve(
-            User(
+            newUser(
                 userResult.id.toString(),
                 userResult.email,
                 userResult.password,

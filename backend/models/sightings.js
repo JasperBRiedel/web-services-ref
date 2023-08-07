@@ -1,6 +1,6 @@
 import { db } from "../database/mysql.js";
 
-export function Sighting(id, trail_id, animal_id, user_id, date, time) {
+export function newSighting(id, trail_id, animal_id, user_id, date, time) {
     return {
         id,
         trail_id,
@@ -16,7 +16,7 @@ export async function getAll() {
     const [allSightingsResults] = await db.query("SELECT * FROM sightings")
     // Convert the collection of results into a list of Sighting objects
     return await allSightingsResults.map((sightingResult) =>
-        Sighting(
+        newSighting(
             sightingResult.id,
             sightingResult.trail_id,
             sightingResult.animal_id,
@@ -44,7 +44,7 @@ export async function getByPage(page, size) {
 
     // Convert the collection of results into a list of Sighting objects
     return await paginatedSightingResults.map((sightingResult) =>
-        Sighting(
+        newSighting(
             sightingResult.id,
             sightingResult.trail_id,
             sightingResult.animal_id,
@@ -62,7 +62,7 @@ export async function getTop(amount) {
     )
     // Convert the collection of results into a list of Sighting objects
     return await allSightingsResults.map((sightingResult) =>
-        Sighting(
+        newSighting(
             sightingResult.id,
             sightingResult.trail_id,
             sightingResult.animal_id,
@@ -81,7 +81,7 @@ export async function getByID(sightingID) {
     if (sightingsResults.length > 0) {
         const sightingResult = sightingsResults[0];
         return Promise.resolve(
-            Sighting(
+            newSighting(
                 sightingResult.id,
                 sightingResult.trail_id,
                 sightingResult.animal_id,
@@ -102,7 +102,7 @@ export async function getByUserID(userID) {
     )
     // Convert the result into a Sighting object
     return await sightingsResults.map((sightingResult) =>
-        Sighting(
+        newSighting(
             sightingResult.id,
             sightingResult.trail_id,
             sightingResult.animal_id,
