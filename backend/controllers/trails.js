@@ -1,20 +1,14 @@
 import { Router } from "express";
-import { validate } from "../middleware/validator.js";
 import xml2js from "xml2js"
 import { Trail } from "../models/trail.js";
 import * as trail from "../models/trail.js";
 import auth from "../middleware/auth.js";
 
+// TODO: Implement input validation
+
 const trailController = Router()
 
-//// Get trail list endpoint
-const getTrailListSchema = {
-    type: "object",
-    properties: {}
-}
-
-trailController.get("/trails", validate({ body: getTrailListSchema }), async (req, res) => {
-    // #swagger.summary = 'Get a collection of all trails'
+trailController.get("/trails", async (req, res) => {
 
     const trails = await trail.getAll()
 
@@ -24,20 +18,8 @@ trailController.get("/trails", validate({ body: getTrailListSchema }), async (re
         trails: trails,
     })
 })
-//// End get trail list endpoint
 
-//// Get trail by ID endpoint
-const getTrailByIDSchema = {
-    type: "object",
-    properties: {
-        id: {
-            type: "string",
-        }
-    }
-}
-
-trailController.get("/trails/:id", validate({ params: getTrailByIDSchema }), (req, res) => {
-    // #swagger.summary = 'Get a specific trail by ID'
+trailController.get("/trails/:id", (req, res) => {
     const trailID = req.params.id
 
     trail.getByID(trailID).then(trail => {
@@ -53,7 +35,6 @@ trailController.get("/trails/:id", validate({ params: getTrailByIDSchema }), (re
         })
     })
 })
-//// End get trail by ID endpoint
 
 trailController.post("/trails/upload/xml", auth(["admin", "spotter"]), (req, res) => {
     if (req.files && req.files["xml-file"]) {
@@ -132,37 +113,8 @@ trailController.post("/trails/upload/xml", auth(["admin", "spotter"]), (req, res
     }
 })
 
-//// Create trail endpoint
-const createTrailSchema = {
-    type: "object",
-    required: ["name"],
-    properties: {
-        name: {
-            type: "string"
-        },
-    }
-}
 
-trailController.post("/trails/", [
-    auth(["admin", "moderator"]),
-    validate({ body: createTrailSchema })
-], (req, res) => {
-    // #swagger.summary = 'Create a specific trail'
-    /* #swagger.requestBody = {
-            description: 'Add a new trail',
-            content: {
-                'application/json': {
-                    schema: {
-                        name: 'string',
-                    },
-                    example: {
-                        name: 'Mountain Trail',
-                    }
-                }
-            }
-            
-        } 
-    */
+trailController.post("/trails/", auth(["admin", "moderator"]), (req, res) => {
     // Get the trail data out of the request
     const trailData = req.body
 
@@ -183,27 +135,8 @@ trailController.post("/trails/", [
         })
     })
 })
-//// End create trail endpoint
 
-//// Update trail by ID
-const updateTrailSchema = {
-    type: "object",
-    required: ["id"],
-    properties: {
-        id: {
-            type: "number"
-        },
-        name: {
-            type: "string"
-        }
-    }
-}
-
-trailController.patch("/trails/", [
-    auth(["admin", "moderator"]),
-    validate({ body: updateTrailSchema })
-], (req, res) => {
-    // #swagger.summary = 'Update a specific trail by ID'
+trailController.patch("/trails/", auth(["admin", "moderator"]), (req, res) => {
     const trail = req.body
 
     res.status(200).json({
@@ -211,24 +144,8 @@ trailController.patch("/trails/", [
         message: "Update trail by ID - Not yet implemented",
     })
 })
-//// End update trail by ID
 
-//// Delete trail by ID
-const deleteTrailSchema = {
-    type: "object",
-    required: ["id"],
-    properties: {
-        id: {
-            type: "number"
-        },
-    }
-}
-
-trailController.delete("/trails/", [
-    auth(["admin", "moderator"]),
-    validate({ body: deleteTrailSchema })
-], (req, res) => {
-    // #swagger.summary = 'Delete a specific trail by id'
+trailController.delete("/trails/", auth(["admin", "moderator"]), (req, res) => {
     const trailID = req.body.id
 
     res.status(200).json({
@@ -236,6 +153,5 @@ trailController.delete("/trails/", [
         message: "Delete trail by ID - Not yet implemented",
     })
 })
-//// End delete trail by ID
 
 export default trailController
