@@ -2,6 +2,8 @@ import * as user from "../models/user.js"
 
 export default function auth(allowed_roles) {
     return function (req, res, next) {
+
+        // TODO: Switch to header only
         // Check the body and the query string for an authentication key
         const authenticationKey = req.body.authenticationKey ?? req.query.authKey
 
