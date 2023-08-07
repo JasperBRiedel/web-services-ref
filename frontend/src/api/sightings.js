@@ -1,6 +1,6 @@
 import { API_URL } from "./api.js"
 
-export async function getAllSightings() {
+export async function getAll() {
     // GET from the API /sightings
     const response = await fetch(
         API_URL + "/sightings",
@@ -17,7 +17,7 @@ export async function getAllSightings() {
     return APIResponseObject.sightings
 }
 
-export async function getTopSightings(amount) {
+export async function getTop(amount) {
     // GET from the API /sightings
     const response = await fetch(
         API_URL + "/sightings/top/" + amount,
@@ -34,7 +34,7 @@ export async function getTopSightings(amount) {
     return APIResponseObject.sightings
 }
 
-export async function getUserSightings(userID) {
+export async function getByUserID(userID) {
     // GET from the API /sightings/user-id/:id
     const response = await fetch(
         API_URL + "/sightings/user-id/" + userID,
@@ -51,7 +51,7 @@ export async function getUserSightings(userID) {
     return APIResponseObject.sightings
 }
 
-export async function getSightingByID(sightingID) {
+export async function getByID(sightingID) {
     // GET from the API /sighting/:id
     const response = await fetch(
         API_URL + "/sightings/" + sightingID,
@@ -68,7 +68,7 @@ export async function getSightingByID(sightingID) {
     return APIResponseObject.sighting
 }
 
-export async function createSighting(sighting, authenticationKey) {
+export async function create(sighting, authenticationKey) {
     const response = await fetch(
         API_URL + "/sightings",
         {
@@ -103,7 +103,7 @@ export async function createSighting(sighting, authenticationKey) {
 //     return patchSightingResponse.sighting
 // }
 
-export async function deleteSighting(sighting, authenticationKey) {
+export async function remove(sighting, authenticationKey) {
     const response = await fetch(
         API_URL + "/sightings",
         {

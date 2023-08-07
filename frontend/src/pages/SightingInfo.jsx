@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getAnimalByID } from "../api/animal";
-import { getSightingByID } from "../api/sightings";
-import { getTrailByID } from "../api/trails";
-import { getUserByID } from "../api/user";
+import * as Animals from "../api/animals";
+import * as Sightings from "../api/sightings";
+import * as Trails from "../api/trails";
+import * as Users from "../api/users";
 import Nav from "../components/Nav";
 import Spinner from "../components/Spinner";
 import { useAuthentication } from "../hooks/authentication";
@@ -14,27 +14,27 @@ export default function SightingInfo() {
 
     const [sighting, setSighting] = useState(null)
     useEffect(() => {
-        getSightingByID(sightingID).then(sighting => setSighting(sighting)).catch(error => console.log(error))
+        Sightings.getByID(sightingID).then(sighting => setSighting(sighting)).catch(error => console.log(error))
     }, [])
 
     const [animal, setAnimal] = useState(null)
     useEffect(() => {
         if (sighting) {
-            getAnimalByID(sighting.animal_id).then(animal => setAnimal(animal))
+            Animals.getByID(sighting.animal_id).then(animal => setAnimal(animal))
         }
     }, [sighting])
 
     const [trail, setTrail] = useState(null)
     useEffect(() => {
         if (sighting) {
-            getTrailByID(sighting.trail_id).then(trail => setTrail(trail))
+            Trails.getByID(sighting.trail_id).then(trail => setTrail(trail))
         }
     }, [sighting])
 
     const [user, setUser] = useState(null)
     useEffect(() => {
         if (sighting) {
-            getUserByID(sighting.user_id, loggedInUser.authenticationKey).then(user => setUser(user))
+            Users.getUserByID(sighting.user_id, loggedInUser.authenticationKey).then(user => setUser(user))
         }
     }, [sighting])
 

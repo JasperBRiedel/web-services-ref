@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuthentication } from "../hooks/authentication"
-import { registerUser } from "../api/user"
+import * as Users from "../api/users"
 
 export default function Register() {
     const navigate = useNavigate()
@@ -29,7 +29,7 @@ export default function Register() {
         // TODO: Add validation for other fields
 
         // Register then attempt login
-        registerUser(formData)
+        Users.registerUser(formData)
             .then(result => {
                 setStatusMessage(result.message)
                 login(formData.email, formData.password)

@@ -1,6 +1,6 @@
 import { API_URL } from "./api.js"
 
-export async function getAllAnimals() {
+export async function getAll() {
     // GET from the API /animals
     const response = await fetch(
         API_URL + "/animals",
@@ -17,7 +17,7 @@ export async function getAllAnimals() {
     return APIResponseObject.animals
 }
 
-export async function getAnimalByID(animalID) {
+export async function getByID(animalID) {
     // GET from the API /animal/:id
     const response = await fetch(
         API_URL + "/animals/" + animalID,
@@ -34,7 +34,7 @@ export async function getAnimalByID(animalID) {
     return APIResponseObject.animal
 }
 
-export async function createAnimal(animal, authenticationKey) {
+export async function create(animal, authenticationKey) {
     const response = await fetch(
         API_URL + "/animals",
         {
@@ -51,7 +51,7 @@ export async function createAnimal(animal, authenticationKey) {
     return postCreateAnimalResponse.animal
 }
 
-export async function updateAnimal(animal, authenticationKey) {
+export async function update(animal, authenticationKey) {
     const response = await fetch(
         API_URL + "/animals",
         {
@@ -68,7 +68,7 @@ export async function updateAnimal(animal, authenticationKey) {
     return patchAnimalResponse.animal
 }
 
-export async function deleteAnimal(animal, authenticationKey) {
+export async function remove(animal, authenticationKey) {
     const response = await fetch(
         API_URL + "/animals",
         {

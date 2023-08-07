@@ -1,9 +1,9 @@
 import { useState } from "react"
 import Nav from "../components/Nav"
-import { SightingAdd } from "../components/SightingAdd"
+import SightingAdd from "../components/SightingAdd"
 import Spinner from "../components/Spinner"
 import UserEdit from "../components/UserEdit"
-import UserSightings from "../components/userSightings"
+import UserSightings from "../components/UserSightings"
 import { useAuthentication } from "../hooks/authentication"
 
 function Dashboard() {

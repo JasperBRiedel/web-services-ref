@@ -1,6 +1,6 @@
 import { API_URL } from "./api.js"
 
-export async function getAllTrails() {
+export async function getAll() {
     // GET from the API /trails
     const response = await fetch(
         API_URL + "/trails",
@@ -17,7 +17,7 @@ export async function getAllTrails() {
     return APIResponseObject.trails
 }
 
-export async function getTrailByID(trailID) {
+export async function getByID(trailID) {
     // GET from the API /trail/:id
     const response = await fetch(
         API_URL + "/trails/" + trailID,
@@ -34,7 +34,7 @@ export async function getTrailByID(trailID) {
     return APIResponseObject.trail
 }
 
-export async function createTrail(trail) {
+export async function create(trail) {
     const response = await fetch(
         API_URL + "/trails",
         {
@@ -51,7 +51,7 @@ export async function createTrail(trail) {
     return postCreateTrailResponse.trail
 }
 
-export async function updateTrail(trail) {
+export async function update(trail) {
     const response = await fetch(
         API_URL + "/trails",
         {
@@ -68,7 +68,7 @@ export async function updateTrail(trail) {
     return patchTrailResponse.trail
 }
 
-export async function deleteTrail(trail) {
+export async function remove(trail) {
     const response = await fetch(
         API_URL + "/trails",
         {

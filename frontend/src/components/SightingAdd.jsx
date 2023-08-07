@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import { getAllAnimals } from "../api/animal"
-import { getAllTrails } from "../api/trails"
-import { createSighting } from "../api/sightings"
+import * as Animals from "../api/animals"
+import * as Sightings from "../api/sightings"
+import * as Trails from "../api/trails"
 import { useAuthentication } from "../hooks/authentication"
 
-export function SightingAdd({ onAdded }) {
+export default function SightingAdd({ onAdded }) {
     const [user, login, logout] = useAuthentication()
 
     const [formData, setFormData] = useState({
@@ -18,13 +18,13 @@ export function SightingAdd({ onAdded }) {
     // Load animals
     const [animals, setAnimals] = useState([])
     useEffect(() => {
-        getAllAnimals().then(animals => setAnimals(animals))
+        Animals.getAll().then(animals => setAnimals(animals))
     }, [])
 
     // Load trails
     const [trails, setTrails] = useState([])
     useEffect(() => {
-        getAllTrails().then(trails => setTrails(trails))
+        Trails.getAll().then(trails => setTrails(trails))
     }, [])
 
     function addSighting(e) {
@@ -37,7 +37,7 @@ export function SightingAdd({ onAdded }) {
             user_id: user.id,
         }
 
-        createSighting(sightingData, user.authenticationKey).then(result => {
+        Sightings.create(sightingData, user.authenticationKey).then(result => {
             setStatusMessage(result.message)
             setFormData({
                 animal_id: "",

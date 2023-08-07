@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
-import { getAnimalByID } from "../api/animal"
-import { getUserSightings } from "../api/sightings"
-import { getTrailByID } from "../api/trails"
+import * as Animals from "../api/animals"
+import * as Sightings from "../api/sightings"
+import * as Trails from "../api/trails"
 import Spinner from "./Spinner"
 
 export default function UserSightings({ userID, refreshDependency }) {
@@ -9,10 +9,10 @@ export default function UserSightings({ userID, refreshDependency }) {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        getUserSightings(userID).then(async sightings => {
+        Sightings.getByUserID(userID).then(async sightings => {
             const sightingsWithExtras = await Promise.all(sightings.map(async sighting => {
-                const trail = await getTrailByID(sighting.trail_id)
-                const animal = await getAnimalByID(sighting.animal_id)
+                const trail = await Trails.getByID(sighting.trail_id)
+                const animal = await Animals.getByID(sighting.animal_id)
 
                 return Promise.resolve({
                     id: sighting.id,

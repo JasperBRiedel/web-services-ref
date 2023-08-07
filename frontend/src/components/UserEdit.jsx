@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { create, deleteByID, getUserByID, update } from "../api/user"
+import * as Users from "../api/users"
 import { useAuthentication } from "../hooks/authentication"
 
 export default function UserEdit({ userID, onSave, allowEditRole }) {
@@ -19,7 +19,7 @@ export default function UserEdit({ userID, onSave, allowEditRole }) {
     // Load selected user provided in userID prop
     useEffect(() => {
         if (userID) {
-            getUserByID(userID, user.authenticationKey).then(user => {
+            Users.getUserByID(userID, user.authenticationKey).then(user => {
                 setFormData(user)
             })
         }
@@ -46,7 +46,7 @@ export default function UserEdit({ userID, onSave, allowEditRole }) {
             // The user in the form has an ID which implies they
             // already exist in the database. Therefore we update.
             setStatusMessage("Updating user...")
-            update(formData, user.authenticationKey).then(result => {
+            Users.update(formData, user.authenticationKey).then(result => {
                 setStatusMessage(result.message)
 
                 if (typeof onSave === "function") {
@@ -57,7 +57,7 @@ export default function UserEdit({ userID, onSave, allowEditRole }) {
             // The user in the form doesn't have an ID which implies they
             // DO NOT exist in the database. Therefore we create.
             setStatusMessage("Creating user...")
-            create(formData, user.authenticationKey).then(result => {
+            Users.create(formData, user.authenticationKey).then(result => {
                 setStatusMessage(result.message)
 
                 if (typeof onSave === "function") {
@@ -75,7 +75,7 @@ export default function UserEdit({ userID, onSave, allowEditRole }) {
     // Delete the user with the currently loaded id in the form data
     function remove() {
         setStatusMessage("Deleting user...")
-        deleteByID(formData.id, user.authenticationKey)
+        Users.deleteByID(formData.id, user.authenticationKey)
             .then(result => {
                 setStatusMessage(result.message)
 

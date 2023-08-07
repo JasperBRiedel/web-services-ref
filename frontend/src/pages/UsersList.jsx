@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import { getAllUsers } from "../api/user"
+import * as Users from "../api/users"
 import Nav from "../components/Nav"
 import Spinner from "../components/Spinner"
 import UserEdit from "../components/UserEdit"
 import { useAuthentication } from "../hooks/authentication"
 
-export default function Users() {
+export default function UserList() {
     const [user] = useAuthentication()
 
     const [refreshTrigger, setRefreshTrigger] = useState()
@@ -14,7 +14,7 @@ export default function Users() {
     // Load user list
     const [users, setUsers] = useState([])
     useEffect(() => {
-        getAllUsers(user.authenticationKey)
+        Users.getAllUsers(user.authenticationKey)
             .then(users => {
                 setUsers(users)
             })

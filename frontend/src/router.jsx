@@ -1,13 +1,13 @@
 import { createBrowserRouter } from "react-router-dom"
-import Animals from "./pages/Animals"
+import { RestrictedRoute } from "./components/RestrictedRoute"
+import AnimalList from "./pages/AnimalList"
 import Dashboard from "./pages/Dashboard"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import SightingInfo from "./pages/SightingInfo"
-import Sightings from "./pages/Sightings"
-import Trails from "./pages/Trails"
-import { RestrictedRoute } from "./components/RestrictedRoute"
-import Users from "./pages/Users"
+import SightingList from "./pages/SightingList"
+import TrailList from "./pages/TrailList"
+import UserList from "./pages/UsersList"
 
 const router = createBrowserRouter([
     {
@@ -21,18 +21,18 @@ const router = createBrowserRouter([
     {
         path: "/animals",
         element: <RestrictedRoute allowedRoles={["admin", "moderator"]}>
-            <Animals />
+            <AnimalList />
         </RestrictedRoute>
     },
     {
         path: "/trails",
         element: <RestrictedRoute allowedRoles={["admin", "moderator"]}>
-            <Trails />
+            <TrailList />
         </RestrictedRoute>
     },
     {
         path: "/sightings",
-        element: <Sightings />
+        element: <SightingList />
     },
     {
         path: "/sightings/:sightingID",
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
     {
         path: "/users",
         element: <RestrictedRoute allowedRoles={["admin"]} >
-            <Users />
+            <UserList />
         </RestrictedRoute >
     },
     {

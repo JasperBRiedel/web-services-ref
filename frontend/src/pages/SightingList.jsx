@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getAnimalByID } from "../api/animal";
-import { getTopSightings } from "../api/sightings";
-import { getTrailByID } from "../api/trails";
+import * as Animals from "../api/animals";
+import * as Sightings from "../api/sightings";
+import * as Trails from "../api/trails";
 import Nav from "../components/Nav";
 import Spinner from "../components/Spinner";
 
-export default function Sightings() {
+export default function SightingList() {
     const navigate = useNavigate()
 
     // Load recent sightings list
     const [sightings, setSightings] = useState([])
 
     useEffect(() => {
-        getTopSightings(200).then(async sightings => {
+        Sightings.getTop(200).then(async sightings => {
             // fetch trails and animals for each sighting
             const sightingsWithExtras = await Promise.all(sightings.map(async sighting => {
-                const trail = await getTrailByID(sighting.trail_id)
-                const animal = await getAnimalByID(sighting.animal_id)
+                const trail = await Trails.getByID(sighting.trail_id)
+                const animal = await Animals.getByID(sighting.animal_id)
 
                 return Promise.resolve({
                     id: sighting.id,

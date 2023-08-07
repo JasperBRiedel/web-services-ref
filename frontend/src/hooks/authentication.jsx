@@ -4,7 +4,7 @@ import {
     login as apiLogin,
     logout as apiLogout,
     getByAuthenticationKey
-} from "../api/user"
+} from "../api/users"
 
 export const AuthenticationContext = createContext(null)
 

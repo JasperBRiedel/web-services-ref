@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getAllAnimals } from "../api/animal";
+import * as Animals from "../api/animals";
 import Nav from "../components/Nav";
 import { XMLUpload } from "../components/XMLUpload";
 
-export default function Animals() {
+export default function AnimalList() {
     const [animals, setAnimals] = useState([])
     useEffect(() => {
-        getAllAnimals().then(animals => setAnimals(animals))
+        Animals.getAll().then(animals => setAnimals(animals))
     }, [])
 
     return <>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { getTopSightings } from "../api/sightings"
-import { useAuthentication } from "../hooks/authentication"
-import { getAnimalByID } from "../api/animal"
-import { getTrailByID } from "../api/trails"
+import * as Animals from "../api/animals"
+import * as Sightings from "../api/sightings"
+import * as Trails from "../api/trails"
 import Spinner from "../components/Spinner"
+import { useAuthentication } from "../hooks/authentication"
 
 function Login() {
     const navigate = useNavigate()
@@ -41,11 +41,11 @@ function Login() {
     const [sightings, setSightings] = useState([])
 
     useEffect(() => {
-        getTopSightings(5).then(async sightings => {
+        Sightings.getTop(5).then(async sightings => {
             // fetch trails and animals for each sighting
             const sightingsWithExtras = await Promise.all(sightings.map(async sighting => {
-                const trail = await getTrailByID(sighting.trail_id)
-                const animal = await getAnimalByID(sighting.animal_id)
+                const trail = await Trails.getByID(sighting.trail_id)
+                const animal = await Animals.getByID(sighting.animal_id)
 
                 return Promise.resolve({
                     id: sighting.id,

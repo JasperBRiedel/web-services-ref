@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { getAllTrails } from "../api/trails";
+import * as Trails from "../api/trails";
 import Nav from "../components/Nav";
 import { XMLUpload } from "../components/XMLUpload";
 
-export default function Trails() {
+export default function TrailList() {
     const [trails, setTrails] = useState([])
     useEffect(() => {
-        getAllTrails().then(trails => setTrails(trails))
+        Trails.getAll().then(trails => setTrails(trails))
     }, [])
 
     return <>
@@ -34,7 +34,7 @@ export default function Trails() {
             <div className="rounded border-2 border-primary  min-h-16 p-2">
                 <h2 className="text-center">Upload Trails</h2>
                 <XMLUpload onUploadSuccess={() => {
-                    getAllTrails().then(trails => setTrails(trails))
+                    Trails.getAll().then(trails => setTrails(trails))
                 }} />
             </div>
         </div>
