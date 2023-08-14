@@ -41,7 +41,7 @@ animalController.post("/animals/", auth(["admin", "moderator"]), (req, res) => {
     const animal = Animals.newAnimal(null, animalData.name, animalData.species)
 
     // Use the create model function to insert this animal into the DB
-    animal.create(animal).then(animal => {
+    Animals.create(animal).then(animal => {
         res.status(200).json({
             status: 200,
             message: "Created animal",
