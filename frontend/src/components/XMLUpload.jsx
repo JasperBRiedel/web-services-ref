@@ -23,9 +23,12 @@ export function XMLUpload({ onUploadSuccess }) {
         const formData = new FormData()
         formData.append("xml-file", file)
 
-        fetch(API_URL + "/trails/upload/xml?authKey=" + user.authenticationKey,
+        fetch(API_URL + "/trails/upload/xml",
             {
                 method: "POST",
+                headers: {
+                    'X-AUTH-KEY': user.authenticationKey
+                },
                 body: formData,
             })
             .then(res => res.json())
