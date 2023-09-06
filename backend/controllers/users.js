@@ -41,7 +41,7 @@ userController.post("/users/login", (req, res) => {
 })
 
 userController.post("/users/logout", (req, res) => {
-    const authenticationKey = req.body.authenticationKey
+    const authenticationKey = req.get("X-AUTH-KEY")
     Users.getByAuthenticationKey(authenticationKey)
         .then(user => {
             user.authenticationKey = null
