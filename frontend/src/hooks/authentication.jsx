@@ -73,5 +73,17 @@ export function useAuthentication() {
         }
     }
 
-    return [authenticatedUser, login, logout]
+    async function refresh() {
+        if (authenticatedUser) {
+            return getByAuthenticationKey(authenticatedUser.authenticationKey)
+                .then(user => {
+                    setAuthenticatedUser(user)
+                    return Promise.resolve("user refreshed")
+                })
+        } else {
+            return Promise.reject("user must be authenticated")
+        }
+    }
+
+    return [authenticatedUser, login, logout, refresh]
 }

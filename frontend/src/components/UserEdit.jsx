@@ -3,7 +3,7 @@ import * as Users from "../api/users"
 import { useAuthentication } from "../hooks/authentication"
 
 export default function UserEdit({ userID, onSave, allowEditRole }) {
-    const [user] = useAuthentication()
+    const [user, , , refresh] = useAuthentication()
 
     const [formData, setFormData] = useState({
         id: null,
@@ -51,6 +51,13 @@ export default function UserEdit({ userID, onSave, allowEditRole }) {
 
                 if (typeof onSave === "function") {
                     onSave()
+                }
+
+                // If the user is updating them self then we should refresh
+                // their local data from the server. (this shows the effects 
+                // of the change in places like the navigation bar without a page reload)
+                if (formData.id == user.id) {
+                    refresh();
                 }
             })
         } else {
