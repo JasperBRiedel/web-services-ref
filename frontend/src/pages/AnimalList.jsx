@@ -17,8 +17,10 @@ export default function AnimalList() {
                 <div className="overflow-x-auto">
                     <table className="table table-compact w-full">
                         <thead>
-                            <th>Name</th>
-                            <th>Species</th>
+                            <tr>
+                                <th>Name</th>
+                                <th>Species</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {animals.map(animal =>

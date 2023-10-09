@@ -130,7 +130,6 @@ export default function UserEdit({ userID, onSave, allowEditRole }) {
                     onChange={(e) => setFormData(existing => { return { ...existing, role: e.target.value } })}
                     disabled={!allowEditRole}
                 >
-                    <option disabled selected>Pick one</option>
                     <option value="admin">Admin</option>
                     <option value="moderator">Moderator</option>
                     <option value="spotter">Spotter</option>

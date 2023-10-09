@@ -32,10 +32,12 @@ export default function UserSightings({ userID, refreshDependency }) {
         ? <Spinner />
         : <table className="table table-compact w-full">
             <thead>
-                <th>Trail</th>
-                <th>Animal</th>
-                <th>Date</th>
-                <th>Time</th>
+                <tr>
+                    <th>Trail</th>
+                    <th>Animal</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                </tr>
             </thead>
             <tbody>
                 {sightings.map(sighting =>

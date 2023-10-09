@@ -22,7 +22,7 @@ export default function UserList() {
 
     return <>
         <Nav />
-        <div className="container mx-auto grid grid-cols-2 gap-2">
+        <div className="container p-2 mx-auto grid md:grid-cols-2 gap-2">
             <div className="rounded border-2 border-primary p-2">
                 <h2>Users</h2>
                 <div className="overflow-auto w-full">
@@ -30,10 +30,12 @@ export default function UserList() {
                         ? <Spinner />
                         : <table className="table table-compact w-full overflow-scroll">
                             <thead>
-                                <th>Name</th>
-                                <th>Role</th>
-                                <th>Email</th>
-                                <th>Select</th>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Email</th>
+                                    <th>Select</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 {users.map(user =>
@@ -41,10 +43,12 @@ export default function UserList() {
                                         <td>{user.firstName} {user.lastName}</td>
                                         <td>{user.role}</td>
                                         <td>{user.email}</td>
-                                        <button
-                                            className="btn btn-xs mt-1"
-                                            onClick={() => setSelectedUserID(user.id)}
-                                        >Edit</button>
+                                        <td>
+                                            <button
+                                                className="btn btn-xs mt-1"
+                                                onClick={() => setSelectedUserID(user.id)}
+                                            >Edit</button>
+                                        </td>
                                     </tr>)}
                             </tbody>
                         </table>

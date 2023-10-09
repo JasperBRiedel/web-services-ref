@@ -17,8 +17,10 @@ export default function TrailList() {
                 <div className="overflow-x-auto">
                     <table className="table table-compact w-full">
                         <thead>
-                            <th>ID</th>
-                            <th>Name</th>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {trails.map(trail =>
