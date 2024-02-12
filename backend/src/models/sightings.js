@@ -1,4 +1,4 @@
-import { db } from "../database/mysql.js";
+import { db } from "../database.js";
 
 export function newSighting(id, trail_id, animal_id, user_id, date, time) {
     return {

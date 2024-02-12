@@ -1,4 +1,4 @@
-import { db } from "../database/mysql.js";
+import { db } from "../database.js";
 
 export function newUser(id, email, password, role, firstName, lastName, authenticationKey) {
     return {

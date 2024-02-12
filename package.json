@@ -1,0 +1,16 @@
+{
+  "name": "web-services-ref",
+  "description": "Animal Spotting fullstack reference project",
+  "version": "1.0.0",
+  "author": "Jasper Riedel-Rutterford",
+  "license": "Jasper Riedel-Rutterford and TAFE Queensland - All Rights Reserved 2024",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "backend": "npm run -w backend start",
+    "frontend": "npm run -w frontend dev"
+  }
+}
