@@ -2,7 +2,7 @@ import { useRef, useState } from "react"
 import { API_URL } from "../api/api"
 import { useAuthentication } from "../hooks/authentication";
 
-export function XMLUpload({ onUploadSuccess }) {
+export function XMLUpload({ onUploadSuccess, uploadUrl, disabled = false }) {
     const [user] = useAuthentication()
 
     const [statusMessage, setStatusMessage] = useState("")
@@ -23,7 +23,7 @@ export function XMLUpload({ onUploadSuccess }) {
         const formData = new FormData()
         formData.append("xml-file", file)
 
-        fetch(API_URL + "/trails/upload/xml",
+        fetch(API_URL + uploadUrl,
             {
                 method: "POST",
                 headers: {
@@ -56,8 +56,9 @@ export function XMLUpload({ onUploadSuccess }) {
                     <input
                         ref={uploadInputRef}
                         type="file"
+                        disabled={disabled}
                         className="file-input file-input-bordered file-input-primary" />
-                    <button className="btn btn-primary mr-2" >Upload</button>
+                    <button disabled={disabled} className="btn btn-primary mr-2" >Upload</button>
                 </div>
                 <label className="label">
                     <span className="label-text-alt">{statusMessage}</span>

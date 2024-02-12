@@ -13,7 +13,7 @@ export default function AnimalList() {
         <Nav />
         <div className="container p-2 mx-auto grid grid-cols-1 md:grid-cols-2 gap-2">
             <div className="rounded border-2 border-primary p-2">
-                <h2 className="text-center">All Trails</h2>
+                <h2 className="text-center">All Animals</h2>
                 <div className="overflow-x-auto">
                     <table className="table table-compact w-full">
                         <thead>
@@ -35,7 +35,8 @@ export default function AnimalList() {
             </div>
             <div className="rounded border-2 border-primary  min-h-16 p-2">
                 <h2 className="text-center">Upload Animals</h2>
-                <XMLUpload />
+                {/* TODO: Implement animal XML import on backend */}
+                <XMLUpload disabled uploadUrl={"/animals/upload-xml"} />
             </div>
         </div>
     </>

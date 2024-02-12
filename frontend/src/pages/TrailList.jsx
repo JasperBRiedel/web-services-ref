@@ -35,7 +35,7 @@ export default function TrailList() {
             </div>
             <div className="rounded border-2 border-primary  min-h-16 p-2">
                 <h2 className="text-center">Upload Trails</h2>
-                <XMLUpload onUploadSuccess={() => {
+                <XMLUpload uploadUrl={"/trails/upload-xml"} onUploadSuccess={() => {
                     Trails.getAll().then(trails => setTrails(trails))
                 }} />
             </div>
