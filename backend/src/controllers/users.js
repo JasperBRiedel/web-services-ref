@@ -8,9 +8,11 @@ import auth from "../middleware/auth.js";
 
 const userController = Router()
 
-userController.post("/users/login", (req, res) => {
+userController.post("/login", (req, res) => {
     // access request body
     let loginData = req.body
+
+    // TODO: Implement request validation
 
     Users.getByEmail(loginData.email)
         .then(user => {
@@ -40,7 +42,7 @@ userController.post("/users/login", (req, res) => {
         })
 })
 
-userController.post("/users/logout", (req, res) => {
+userController.post("/logout", (req, res) => {
     const authenticationKey = req.get("X-AUTH-KEY")
     Users.getByAuthenticationKey(authenticationKey)
         .then(user => {
@@ -60,7 +62,7 @@ userController.post("/users/logout", (req, res) => {
 })
 
 
-userController.get("/users", auth(["admin"]), async (req, res) => {
+userController.get("/", auth(["admin"]), async (req, res) => {
     const users = await Users.getAll()
 
     res.status(200).json({
@@ -70,8 +72,10 @@ userController.get("/users", auth(["admin"]), async (req, res) => {
     })
 })
 
-userController.get("/users/:id", auth(["admin", "moderator", "spotter"]), (req, res) => {
+userController.get("/:id", auth(["admin", "moderator", "spotter"]), (req, res) => {
     const userID = req.params.id
+
+    // TODO: Implement request validation
 
     // TODO: Enforce that moderator and spotter users
     // can only get them selves. 
@@ -90,7 +94,7 @@ userController.get("/users/:id", auth(["admin", "moderator", "spotter"]), (req, 
     })
 })
 
-userController.get("/users/by-key/:authenticationKey", (req, res) => {
+userController.get("/authentication/:authenticationKey", (req, res) => {
     const authenticationKey = req.params.authenticationKey
 
     Users.getByAuthenticationKey(authenticationKey).then(user => {
@@ -107,9 +111,11 @@ userController.get("/users/by-key/:authenticationKey", (req, res) => {
     })
 })
 
-userController.post("/users", auth(["admin"]), (req, res) => {
+userController.post("/", auth(["admin"]), (req, res) => {
     // Get the user data out of the request
     const userData = req.body.user
+
+    // TODO: Implement request validation
 
     // hash the password if it isn't already hashed
     if (!userData.password.startsWith("$2a")) {
@@ -142,9 +148,11 @@ userController.post("/users", auth(["admin"]), (req, res) => {
     })
 })
 
-userController.post("/users/register", (req, res) => {
+userController.post("/register", (req, res) => {
     // Get the user data out of the request
     const userData = req.body
+
+    // TODO: Implement request validation
 
     // hash the password 
     userData.password = bcrypt.hashSync(userData.password);
@@ -175,14 +183,20 @@ userController.post("/users/register", (req, res) => {
     })
 })
 
-userController.patch("/users", auth(["admin", "moderator", "spotter"]), async (req, res) => {
+userController.patch("/:id", auth(["admin", "moderator", "spotter"]), async (req, res) => {
     // Get the user data out of the request
     //
     // Note - the user data being updated is encapsulated in a user
     // object to avoid ambiguity between the logged in user's
     // authentication key and the authentication key of the user
     // currently being updated.
+    const userID = req.params.id
     const userData = req.body.user
+    
+    // Use ID passed in URL
+    userData.id = userID
+
+    // TODO: Implement request validation
 
     // TODO: Enforce that moderators and spotters can only
     // update their own user records.  
@@ -219,8 +233,10 @@ userController.patch("/users", auth(["admin", "moderator", "spotter"]), async (r
     })
 })
 
-userController.delete("/users/:id", auth(["admin"]), (req, res) => {
+userController.delete("/:id", auth(["admin"]), (req, res) => {
     const userID = req.params.id
+
+    // TODO: Implement request validation
 
     Users.deleteByID(userID).then(result => {
         res.status(200).json({

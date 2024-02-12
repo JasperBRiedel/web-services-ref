@@ -37,7 +37,7 @@ export async function getTop(amount) {
 export async function getByUserID(userID) {
     // GET from the API /sightings/user-id/:id
     const response = await fetch(
-        API_URL + "/sightings/user-id/" + userID,
+        API_URL + "/sightings/user/" + userID,
         {
             method: "GET",
             headers: {
@@ -106,7 +106,7 @@ export async function create(sighting, authenticationKey) {
 
 export async function remove(sighting, authenticationKey) {
     const response = await fetch(
-        API_URL + "/sightings",
+        API_URL + "/sightings/" + sighting.id,
         {
             method: "DELETE",
             headers: {

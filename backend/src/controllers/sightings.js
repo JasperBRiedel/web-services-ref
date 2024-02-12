@@ -6,7 +6,7 @@ import auth from "../middleware/auth.js";
 
 const sightingController = Router()
 
-sightingController.get("/sightings", async (req, res) => {
+sightingController.get("/", async (req, res) => {
     const sightings = await Sightings.getAll()
 
     res.status(200).json({
@@ -16,21 +16,10 @@ sightingController.get("/sightings", async (req, res) => {
     })
 })
 
-sightingController.get("/sightings/paged/:page", async (req, res) => {
-    const pageSize = 5;
-    const page = parseInt(req.params.page);
-
-    const sightings = await Sightings.getByPage(page, pageSize);
-
-    res.status(200).json({
-        status: 200,
-        message: "Get paginated sightings on page " + page,
-        sightings: sightings,
-    })
-})
-
-sightingController.get("/sightings/top/:amount", async (req, res) => {
+sightingController.get("/top/:amount", async (req, res) => {
     const amount = parseInt(req.params.amount)
+    
+    // TODO: Implement request validation
 
     const sightings = await Sightings.getTop(amount)
 
@@ -41,8 +30,25 @@ sightingController.get("/sightings/top/:amount", async (req, res) => {
     })
 })
 
-sightingController.get("/sightings/user-id/:id", async (req, res) => {
+sightingController.get("/page/:page", async (req, res) => {
+    const pageSize = 5;
+    const page = parseInt(req.params.page);
+    
+    // TODO: Implement request validation
+
+    const sightings = await Sightings.getByPage(page, pageSize);
+
+    res.status(200).json({
+        status: 200,
+        message: "Get paginated sightings on page " + page,
+        sightings: sightings,
+    })
+})
+
+sightingController.get("/user/:id", async (req, res) => {
     const userID = req.params.id
+
+    // TODO: Implement request validation
 
     const sightings = await Sightings.getByUserID(userID)
 
@@ -53,8 +59,10 @@ sightingController.get("/sightings/user-id/:id", async (req, res) => {
     })
 })
 
-sightingController.get("/sightings/:id", (req, res) => {
+sightingController.get("/:id", (req, res) => {
     const sightingID = req.params.id
+
+    // TODO: Implement request validation
 
     Sightings.getByID(sightingID).then(sighting => {
         res.status(200).json({
@@ -70,9 +78,11 @@ sightingController.get("/sightings/:id", (req, res) => {
     })
 })
 
-sightingController.post("/sightings/", auth(["admin", "moderator", "spotter"]), (req, res) => {
+sightingController.post("/", auth(["admin", "moderator", "spotter"]), (req, res) => {
     // Get the sighting data out of the request
     const sightingData = req.body
+
+    // TODO: Implement request validation
 
     // Convert the sighting data into an Sighting model object
     const sighting = Sightings.newSighting(
@@ -100,8 +110,10 @@ sightingController.post("/sightings/", auth(["admin", "moderator", "spotter"]), 
     })
 })
 
-sightingController.delete("/sightings/", auth(["admin", "moderator", "spotter"]), (req, res) => {
-    const sightingID = req.body.id
+sightingController.delete("/:id", auth(["admin", "moderator", "spotter"]), (req, res) => {
+    const sightingID = req.params.id
+
+    // TODO: Implement request validation
 
     // TODO: If the role is spotter then we should also check that
     // the sighting they are deleting was created by them.

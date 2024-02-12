@@ -75,7 +75,7 @@ export async function getUserByID(userID, authenticationKey) {
 
 export async function getByAuthenticationKey(authenticationKey) {
     const response = await fetch(
-        API_URL + "/users/by-key/" + authenticationKey,
+        API_URL + "/users/authentication/" + authenticationKey,
         {
             method: "GET",
             headers: {
@@ -91,7 +91,7 @@ export async function getByAuthenticationKey(authenticationKey) {
 
 export async function update(user, authenticationKey) {
     const response = await fetch(
-        API_URL + "/users",
+        API_URL + "/users/" + user.id,
         {
             method: "PATCH",
             headers: {

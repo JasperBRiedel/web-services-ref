@@ -7,7 +7,7 @@ import auth from "../middleware/auth.js";
 
 const trailController = Router()
 
-trailController.get("/trails", async (req, res) => {
+trailController.get("/", async (req, res) => {
 
     const trails = await Trails.getAll()
 
@@ -18,8 +18,10 @@ trailController.get("/trails", async (req, res) => {
     })
 })
 
-trailController.get("/trails/:id", (req, res) => {
+trailController.get("/:id", (req, res) => {
     const trailID = req.params.id
+
+    // TODO: Implement request validation
 
     Trails.getByID(trailID).then(trail => {
         res.status(200).json({
@@ -35,7 +37,7 @@ trailController.get("/trails/:id", (req, res) => {
     })
 })
 
-trailController.post("/trails/upload/xml", auth(["admin", "spotter"]), (req, res) => {
+trailController.post("/upload-xml", auth(["admin", "spotter"]), (req, res) => {
     if (req.files && req.files["xml-file"]) {
         // Access the XML file as a string
         const XMLFile = req.files["xml-file"]
@@ -113,9 +115,11 @@ trailController.post("/trails/upload/xml", auth(["admin", "spotter"]), (req, res
 })
 
 
-trailController.post("/trails/", auth(["admin", "moderator"]), (req, res) => {
+trailController.post("/", auth(["admin", "moderator"]), (req, res) => {
     // Get the trail data out of the request
     const trailData = req.body
+
+    // TODO: Implement request validation
 
     // Convert the trail data into an Trail model object
     const trail = newTrail(null, trailData.name)
@@ -135,8 +139,11 @@ trailController.post("/trails/", auth(["admin", "moderator"]), (req, res) => {
     })
 })
 
-trailController.patch("/trails/", auth(["admin", "moderator"]), (req, res) => {
+trailController.patch("/:id", auth(["admin", "moderator"]), (req, res) => {
+    const trailID = req.params.id
     const trail = req.body
+
+    // TODO: Implement request validation
 
     res.status(200).json({
         status: 200,
@@ -144,8 +151,10 @@ trailController.patch("/trails/", auth(["admin", "moderator"]), (req, res) => {
     })
 })
 
-trailController.delete("/trails/", auth(["admin", "moderator"]), (req, res) => {
-    const trailID = req.body.id
+trailController.delete("/:id", auth(["admin", "moderator"]), (req, res) => {
+    const trailID = req.params.id
+
+    // TODO: Implement request validation
 
     res.status(200).json({
         status: 200,

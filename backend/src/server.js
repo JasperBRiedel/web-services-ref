@@ -1,6 +1,10 @@
-import express from "express"
 import cors from "cors"
+import express from "express"
 import fileUpload from "express-fileupload"
+import animalController from "./controllers/animals.js"
+import sightingController from "./controllers/sightings.js"
+import trailController from "./controllers/trails.js"
+import userController from "./controllers/users.js"
 
 // Create express application
 const port = 8080
@@ -27,15 +31,11 @@ app.use(fileUpload({
     limits: { fileSize: 50 * 1024 * 1024 },
 }))
 
-// Import and use the routers of each controller.
-import animalController from "./controllers/animals.js"
-app.use(animalController)
-import userController from "./controllers/users.js"
-app.use(userController)
-import trailController from "./controllers/trails.js"
-app.use(trailController)
-import sightingController from "./controllers/sightings.js"
-app.use(sightingController)
+// Import and use the route defined by controller.
+app.use("/animals", animalController)
+app.use("/users", userController)
+app.use("/trails", trailController)
+app.use("/sightings", sightingController)
 
 // Catch errors raised by endpoints and respond with JSON error object
 app.use((err, req, res, next) => {
