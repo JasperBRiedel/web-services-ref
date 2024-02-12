@@ -44,50 +44,25 @@ This project relies on various technologies and libraries used in both the front
 
 To get started with the **Animal Spotting Web Application**, follow these steps:
 
-### Frontend (animals-frontend-react)
-
-1. Navigate to the `frontend` directory:
-
-   ```bash
-   cd frontend
-   ```
-
-2. Install frontend dependencies:
+1. Install dependencies:
 
    ```bash
    npm install
    ```
 
-3. Start the development server:
+2. Set up your database (sample DB in `mysql-dump/animal-spotting-sample-db.sql`) and configure the connection in the `backend/src/database.js`.
+
+3. Start the backend API server :
 
    ```bash
-   npm run dev
+   npm run backend
    ```
 
-   This will launch the frontend application on a development server, typically at `http://localhost:5173`.
-
-### Backend (animals-backend-api)
-
-1. Navigate to the `backend` directory:
+4. Start the frontend vite development server :
 
    ```bash
-   cd backend
+   # In another terminal
+   npm run frontend
    ```
-
-2. Install backend dependencies:
-
-   ```bash
-   npm install
-   ```
-
-3. Set up your database and configure the connection in the `.env` file based on the example provided in `example.env`.
-
-4. Start the backend server:
-
-   ```bash
-   npm start
-   ```
-
-   This will start the backend API server, which is typically available at `http://localhost:8080`.
 
 **Disclaimer**: This source code is provided without any warranty, express or implied. Usage of the resources within this repository is at your own risk.
