@@ -37,6 +37,16 @@ app.use(trailController)
 import sightingController from "./controllers/sightings.js"
 app.use(sightingController)
 
+// Catch errors raised by endpoints and respond with JSON error object
+app.use((err, req, res, next) => {
+    // format error
+    res.status(err.status || 500).json({
+        status: err.status,
+        message: err.message,
+        errors: err.errors,
+    })
+})
+
 // Start listening for API requests
 app.listen(
     port,
