@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom"
-import { useAuthentication } from "../hooks/authentication"
+import { useAuthentication } from "../features/authentication"
 
 export default function Nav() {
     const [user, login, logout] = useAuthentication()

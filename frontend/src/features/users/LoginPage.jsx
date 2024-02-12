@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import * as Animals from "../api/animals"
-import * as Sightings from "../api/sightings"
-import * as Trails from "../api/trails"
-import Spinner from "../components/Spinner"
-import { useAuthentication } from "../hooks/authentication"
+import * as Animals from "../../api/animals"
+import * as Sightings from "../../api/sightings"
+import * as Trails from "../../api/trails"
+import Spinner from "../../common/Spinner"
+import { useAuthentication } from "../authentication"
 
-function Login() {
+function LoginPage() {
     const navigate = useNavigate()
 
     const [user, login, logout] = useAuthentication()
@@ -200,4 +200,4 @@ function Login() {
     </div>
 }
 
-export default Login
+export default LoginPage

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import * as Animals from "../api/animals"
-import * as Sightings from "../api/sightings"
-import * as Trails from "../api/trails"
-import Spinner from "./Spinner"
+import * as Animals from "../../api/animals"
+import * as Sightings from "../../api/sightings"
+import * as Trails from "../../api/trails"
+import Spinner from "../../common/Spinner"
 
-export default function UserSightings({ userID, refreshDependency }) {
+export default function UserSightingsList({ userID, refreshDependency }) {
     const [sightings, setSightings] = useState([])
     const [loading, setLoading] = useState(true)
 

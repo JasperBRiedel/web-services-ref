@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import * as Animals from "../api/animals"
-import * as Sightings from "../api/sightings"
-import * as Trails from "../api/trails"
-import { useAuthentication } from "../hooks/authentication"
+import * as Animals from "../../api/animals"
+import * as Sightings from "../../api/sightings"
+import * as Trails from "../../api/trails"
+import { useAuthentication } from "../authentication"
 
 export default function SightingAdd({ onAdded }) {
     const [user, login, logout] = useAuthentication()

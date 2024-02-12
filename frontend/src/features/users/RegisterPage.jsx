@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { useAuthentication } from "../hooks/authentication"
-import * as Users from "../api/users"
+import { useAuthentication } from "../authentication"
+import * as Users from "../../api/users"
 
-export default function Register() {
+export default function RegisterPage() {
     const navigate = useNavigate()
 
     const [user, login, logout] = useAuthentication()

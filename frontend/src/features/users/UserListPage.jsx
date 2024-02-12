@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
-import * as Users from "../api/users"
-import Nav from "../components/Nav"
-import Spinner from "../components/Spinner"
-import UserEdit from "../components/UserEdit"
-import { useAuthentication } from "../hooks/authentication"
+import * as Users from "../../api/users"
+import Nav from "../../common/Nav"
+import Spinner from "../../common/Spinner"
+import UserEdit from "./UserEdit"
+import { useAuthentication } from "../authentication"
 
-export default function UserList() {
+export default function UserListPage() {
     const [user] = useAuthentication()
 
     const [refreshTrigger, setRefreshTrigger] = useState()

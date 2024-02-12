@@ -1,8 +1,8 @@
 import { useRef, useState } from "react"
-import { API_URL } from "../api/api"
-import { useAuthentication } from "../hooks/authentication";
+import { API_URL } from "../../api/api"
+import { useAuthentication } from "../authentication";
 
-export function XMLUpload({ onUploadSuccess, uploadUrl, disabled = false }) {
+export function XMLUploader({ onUploadSuccess, uploadUrl, disabled = false }) {
     const [user] = useAuthentication()
 
     const [statusMessage, setStatusMessage] = useState("")

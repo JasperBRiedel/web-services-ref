@@ -1,12 +1,12 @@
 import { useState } from "react"
-import Nav from "../components/Nav"
-import SightingAdd from "../components/SightingAdd"
-import Spinner from "../components/Spinner"
-import UserEdit from "../components/UserEdit"
-import UserSightings from "../components/UserSightings"
-import { useAuthentication } from "../hooks/authentication"
+import Nav from "../../common/Nav"
+import SightingAdd from "../sightings/SightingAdd"
+import Spinner from "../../common/Spinner"
+import UserEdit from "./UserEdit"
+import UserSightingsList from "../sightings/UserSightingsList"
+import { useAuthentication } from "../authentication"
 
-function Dashboard() {
+function DashboardPage() {
     const [user] = useAuthentication()
 
     const [refreshTrigger, setRefreshTrigger] = useState()
@@ -27,7 +27,7 @@ function Dashboard() {
                 <div className="rounded border-2 border-primary md:col-start-2 md:row-start-1 row-end-3 p-2">
                     <h2 className="text-center">My Sightings</h2>
                     <div className="overflow-x-auto">
-                        <UserSightings userID={user.id} refreshDependency={refreshTrigger} />
+                        <UserSightingsList userID={user.id} refreshDependency={refreshTrigger} />
                     </div>
                 </div>
             </div>
@@ -37,4 +37,4 @@ function Dashboard() {
     </>
 }
 
-export default Dashboard
+export default DashboardPage

@@ -1,52 +1,52 @@
 import { createBrowserRouter } from "react-router-dom"
-import { RestrictedRoute } from "./components/RestrictedRoute"
-import AnimalList from "./pages/AnimalList"
-import Dashboard from "./pages/Dashboard"
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import SightingInfo from "./pages/SightingInfo"
-import SightingList from "./pages/SightingList"
-import TrailList from "./pages/TrailList"
-import UserList from "./pages/UsersList"
+import { RestrictedRoute } from "./common/RestrictedRoute"
+import AnimalListPage from "./features/animals/AnimalListPage"
+import DashboardPage from "./features/users/DashboardPage"
+import LoginPage from "./features/users/LoginPage"
+import RegisterPage from "./features/users/RegisterPage"
+import SightingInfoPage from "./features/sightings/SightingInfoPage"
+import SightingListPage from "./features/sightings/SightingListPage"
+import TrailsPage from "./features/trails/TrailsPage"
+import UserListPage from "./features/users/UserListPage"
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Login />
+        element: <LoginPage />
     },
     {
         path: "/dashboard",
-        element: <Dashboard />
+        element: <DashboardPage />
     },
     {
         path: "/animals",
         element: <RestrictedRoute allowedRoles={["admin", "moderator"]}>
-            <AnimalList />
+            <AnimalListPage />
         </RestrictedRoute>
     },
     {
         path: "/trails",
         element: <RestrictedRoute allowedRoles={["admin", "moderator"]}>
-            <TrailList />
+            <TrailsPage />
         </RestrictedRoute>
     },
     {
         path: "/sightings",
-        element: <SightingList />
+        element: <SightingListPage />
     },
     {
         path: "/sightings/:sightingID",
-        element: <SightingInfo />
+        element: <SightingInfoPage />
     },
     {
         path: "/users",
         element: <RestrictedRoute allowedRoles={["admin"]} >
-            <UserList />
+            <UserListPage />
         </RestrictedRoute >
     },
     {
         path: "/register",
-        element: <Register />
+        element: <RegisterPage />
 
     }
 ])

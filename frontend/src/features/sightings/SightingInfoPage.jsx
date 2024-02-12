@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import * as Animals from "../api/animals";
-import * as Sightings from "../api/sightings";
-import * as Trails from "../api/trails";
-import * as Users from "../api/users";
-import Nav from "../components/Nav";
-import Spinner from "../components/Spinner";
-import { useAuthentication } from "../hooks/authentication";
+import * as Animals from "../../api/animals";
+import * as Sightings from "../../api/sightings";
+import * as Trails from "../../api/trails";
+import * as Users from "../../api/users";
+import Nav from "../../common/Nav";
+import Spinner from "../../common/Spinner";
+import { useAuthentication } from "../authentication";
 
-export default function SightingInfo() {
+export default function SightingInfoPage() {
     const [loggedInUser] = useAuthentication()
     const { sightingID } = useParams()
 

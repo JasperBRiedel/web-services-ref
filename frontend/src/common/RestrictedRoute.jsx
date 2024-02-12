@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { useAuthentication } from "../hooks/authentication"
+import { useAuthentication } from "../features/authentication"
 import Nav from "./Nav"
 
 export function RestrictedRoute({ allowedRoles = [], children }) {

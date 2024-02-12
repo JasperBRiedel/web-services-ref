@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Animals from "../api/animals";
-import * as Sightings from "../api/sightings";
-import * as Trails from "../api/trails";
-import Nav from "../components/Nav";
-import Spinner from "../components/Spinner";
+import * as Animals from "../../api/animals";
+import * as Sightings from "../../api/sightings";
+import * as Trails from "../../api/trails";
+import Nav from "../../common/Nav";
+import Spinner from "../../common/Spinner";
 
-export default function SightingList() {
+export default function SightingListPage() {
     const navigate = useNavigate()
 
     // Load recent sightings list

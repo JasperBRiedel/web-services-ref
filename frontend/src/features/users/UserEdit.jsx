@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
-import * as Users from "../api/users"
-import { useAuthentication } from "../hooks/authentication"
+import * as Users from "../../api/users"
+import { useAuthentication } from "../authentication"
 
 export default function UserEdit({ userID, onSave, allowEditRole }) {
     const [user, , , refresh] = useAuthentication()

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import * as Animals from "../api/animals";
-import Nav from "../components/Nav";
-import { XMLUpload } from "../components/XMLUpload";
+import * as Animals from "../../api/animals";
+import Nav from "../../common/Nav";
+import { XMLUploader } from "../xml/XMLUploader";
 
-export default function AnimalList() {
+export default function AnimalListPage() {
     const [animals, setAnimals] = useState([])
     useEffect(() => {
         Animals.getAll().then(animals => setAnimals(animals))
@@ -36,7 +36,7 @@ export default function AnimalList() {
             <div className="rounded border-2 border-primary  min-h-16 p-2">
                 <h2 className="text-center">Upload Animals</h2>
                 {/* TODO: Implement animal XML import on backend */}
-                <XMLUpload disabled uploadUrl={"/animals/upload-xml"} />
+                <XMLUploader disabled uploadUrl={"/animals/upload-xml"} />
             </div>
         </div>
     </>
