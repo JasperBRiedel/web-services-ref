@@ -63,6 +63,7 @@ export default function SightingAdd({ onAdded }) {
                     value={formData.animal_id}
                     onChange={(e) => setFormData(existing => { return { ...existing, animal_id: e.target.value } })}
                 >
+                    <option value="" disabled>Select Animal</option>
                     {animals.map(animal => <option key={animal.id} value={animal.id}>{animal.name} - {animal.species}</option>)}
                 </select>
             </div>
@@ -75,6 +76,7 @@ export default function SightingAdd({ onAdded }) {
                     value={formData.trail_id}
                     onChange={(e) => setFormData(existing => { return { ...existing, trail_id: e.target.value } })}
                 >
+                    <option value="" disabled>Select Trail</option>
                     {trails.map(trail => <option key={trail.id} value={trail.id}>{trail.name}</option>)}
                 </select>
             </div>
