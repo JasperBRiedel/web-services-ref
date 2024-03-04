@@ -34,14 +34,12 @@ export async function getByID(animalID) {
 }
 
 export async function create(animal) {
-    // New animals should not have existing IDs, delete just to be sure.
-    delete animal.id
     // Insert animal object and return resulting promise
     return db.query(
         "INSERT INTO animals (name, species) VALUES (?, ?)",
         [animal.name, animal.species]
     ).then(([result]) => {
-        // Inject the inserted ID into the animal object and return
+        // Return a copy of the newly created animal with it's primary key
         return { ...animal, id: result.insertId }
     })
 }

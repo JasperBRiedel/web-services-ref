@@ -113,15 +113,13 @@ export async function getByUserID(userID) {
 }
 
 export async function create(sighting) {
-    // New sightings should not have existing IDs, delete just to be sure.
-    delete sighting.id
     // Insert sighting object and return resulting promise
     return db.query(
         "INSERT INTO sightings (trail_id, animal_id, user_id, date, time) " +
         "VALUES (?, ?, ?, ?, ?)",
         [sighting.trail_id, sighting.animal_id, sighting.user_id, sighting.date, sighting.time]
     ).then(([result]) => {
-        // Inject the inserted ID into the sighting object and return
+        // Return a copy of the newly created sighting with it's primary key
         return { ...sighting, id: result.insertId }
     })
 }

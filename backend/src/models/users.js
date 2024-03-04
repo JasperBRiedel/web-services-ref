@@ -96,8 +96,6 @@ export async function getByAuthenticationKey(authenticationKey) {
     }
 }
 export async function create(user) {
-    delete user.id
-
     return db.query(
         "INSERT INTO users (email, password, role, first_name, last_name) "
         + "VALUE (?, ?, ?, ?, ?)",

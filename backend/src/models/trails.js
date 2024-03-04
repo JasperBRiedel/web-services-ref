@@ -32,14 +32,12 @@ export async function getByID(trailID) {
 }
 
 export async function create(trail) {
-    // New trails should not have existing IDs, delete just to be sure.
-    delete trail.id
     // Insert trail object and return resulting promise
     return db.query(
         "INSERT INTO trails (name) VALUES (?)",
         [trail.name]
     ).then(([result]) => {
-        // Inject the inserted ID into the trail object and return
+        // Return a copy of the newly trail sighting with it's primary key
         return { ...trail, id: result.insertId }
     })
 }
