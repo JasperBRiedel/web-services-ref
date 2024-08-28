@@ -73,7 +73,7 @@ trailController.post("/upload-xml", auth(["admin", "spotter"]), (req, res) => {
                 } else if (operation == "update") {
                     Promise.all(trailsData.map((trailData) => {
                         // Convert the xml object into a model object
-                        const trailModel = newTrail(
+                        const trailModel = Trails.newTrail(
                             trailData.id.toString(),
                             trailData.name.toString()
                         )
